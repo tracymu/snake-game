@@ -1,20 +1,36 @@
 function Game() {
-	this.snake = new Snake();
-	this.food = new Food();
 	this.grid = new Grid();
 	this.grid.render();
+	this.snake = new Snake();
+	this.food = new Food();
 };
 
 
 function Snake() {
 	this.column = 20;
 	this.row = 20;
+	this.render();
+}
+
+Snake.prototype = {
+	render : function() {
+		var cell =  $('#' + this.row + '-' + this.column);
+		cell.addClass('snake');
+	}
 }
 
 
 function Food() {
 	this.row = Math.floor((Math.random() * 40) + 1);
 	this.column = Math.floor((Math.random() * 40) + 1);
+	this.render();
+}
+
+Food.prototype = {
+	render : function() {
+		var cell =  $('#' + this.row + '-' + this.column);
+		cell.addClass('food');
+	}
 }
 
 
