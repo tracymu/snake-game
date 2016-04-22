@@ -4,18 +4,19 @@ function Game() {
   this.snake = new Snake();
   this.food = new Food();
 
-  this.moveSnake();
+  this.start();
 };
 
 
 Game.prototype = {
-  moveSnake : function() {
-    setTimeout(function(){
+  start : function() {
+    var timer;
+    clearInterval(timer);
+    timer = setInterval(function() {
       this.game.snake.move();
-    }, 2000);
+    }, 1000);
   }
 }
-
 
 function Snake() {
   this.head = [20,20]
@@ -46,7 +47,7 @@ Snake.prototype = {
     }
   },
 
-  move : function() {
+  move : function() {    
     var cell =  $('#' + this.head[0] + '-' + this.head[1]);
     cell.removeClass('snake');
     this.head = this.newHead();
