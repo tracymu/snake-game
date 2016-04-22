@@ -1,14 +1,21 @@
 function Game(element) {
 	this.element = element;
-	this.foodRow = Math.floor((Math.random() * 40) + 1);
-	this.foodColumn = Math.floor((Math.random() * 40) + 1);
 	this.snake = new Snake();
+	this.food = new Food();
 };
+
 
 function Snake() {
 	this.column = 20;
 	this.row = 20;
 }
+
+
+function Food() {
+	this.row = Math.floor((Math.random() * 40) + 1);
+	this.column = Math.floor((Math.random() * 40) + 1);
+}
+
 
 Game.prototype = {
 	render : function() {
@@ -19,7 +26,7 @@ Game.prototype = {
     	var row = $('<tr></tr>');
     	for(j=0; j<40; j++){
 				var col = $('<td></td>');
-				if (i === this.foodRow && j === this.foodColumn) { 
+				if (i === this.food.row && j === this.food.column) { 
 					col.addClass('food');
 				} else if (i === this.snake.row && j === this.snake.column) {
 					col.addClass('snake');
@@ -45,6 +52,9 @@ $(document).ready(function(){
 
 	game.render();
 });
+
+
+
 
 //  make a state class
 
