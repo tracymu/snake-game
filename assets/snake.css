@@ -1,0 +1,13 @@
+td {
+	background-color: blue;
+	height: 20px;
+	width: 20px;
+}
+
+.food {
+	background-color: yellow;
+}
+
+.snake { 
+	background-color: red;
+}
