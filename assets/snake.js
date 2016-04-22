@@ -1,7 +1,8 @@
-function Game(element) {
-	this.element = element;
+function Game() {
 	this.snake = new Snake();
 	this.food = new Food();
+	this.grid = new Grid();
+	this.grid.render();
 };
 
 
@@ -17,52 +18,28 @@ function Food() {
 }
 
 
-Game.prototype = {
-	render : function() {
+function Grid(size) {
+	this.element = $('.grid');
+}
 
+Grid.prototype = {
+	render : function() {
 		var table = $('<table></table>');
 
 		for(i=0; i<40; i++){
     	var row = $('<tr></tr>');
-    	for(j=0; j<40; j++){
-				var col = $('<td></td>');
-				if (i === this.food.row && j === this.food.column) { 
-					col.addClass('food');
-				} else if (i === this.snake.row && j === this.snake.column) {
-					col.addClass('snake');
-				};
+    	for(j=0; j< 40; j++){
+				var col = $('<td class="cell" id ="' + i + '-' + j + '"></td>');
 				row.append(col);
 			};
-
     	table.append(row);
   	};
   	this.element.append(table);
-
-  	addEventListener("keydown", function(event) {
-  		event.preventDefault();
-    	console.log(event.code);
-  	});
   }
 }
 
 
 $(document).ready(function(){
-	var element = $('.grid');
-	var game = new Game(element);
-
-	game.render();
+	game = new Game();
 });
-
-
-
-
-//  make a state class
-
-// make a cell class with a render method, which returns the td that we want.
-//  then in the loop you will call the render on that
-//  and it will use the State
-//  with the cell, it takes in i and j for it's coordinates
-
-
-//  so the keypress changes the steate - and the game will game.render() will listen for a new state  - some kind of observer thing
 
