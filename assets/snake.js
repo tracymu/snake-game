@@ -7,7 +7,6 @@ function Game() {
     this.snake = new Snake();
     this.food = new Food();
     this.start();
-    this.changeDirection();
   }
 
   this.start = function() {
@@ -15,21 +14,8 @@ function Game() {
       this.game.checkIfEnd();
       this.game.snake.move();
     }, 1000);
-  }, 
+  }
 
-  this.changeDirection = function() {
-    var keys = {
-      37 : 'l',
-      38 : 'u',
-      39 : 'r',
-      40 : 'd'
-    }
-
-    $(document).keydown(function(event){
-      window.game.snake.direction = keys[event.keyCode];
-      event.preventDefault();
-    });
-  },
   this.checkIfEnd = function() {
     if (this.snake.head[0] < 0 || this.snake.head[0] > 39 || this.snake.head[1] < 0 || this.snake.head[1] > 39  ) {
       clearInterval(timer);
@@ -42,6 +28,7 @@ function Snake() {
   this.head = [20,20]
   this.direction = 'r';
   this.render();
+  this.changeDirection();
 }
 
 Snake.prototype = {
@@ -65,6 +52,20 @@ Snake.prototype = {
         return [this.head[0] + 1, this.head[1]];
         break;
     }
+  },
+
+  changeDirection : function() {
+    var keys = {
+      37 : 'l',
+      38 : 'u',
+      39 : 'r',
+      40 : 'd'
+    }
+
+    $(document).keydown(function(event){
+      window.game.snake.direction = keys[event.keyCode];
+      event.preventDefault();
+    });
   },
 
   move : function() {
