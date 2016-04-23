@@ -3,8 +3,8 @@ function Game() {
   this.grid.render();
   this.snake = new Snake();
   this.food = new Food();
-
   this.start();
+  this.changeDirection();
 };
 
 
@@ -15,6 +15,13 @@ Game.prototype = {
     timer = setInterval(function() {
       this.game.snake.move();
     }, 1000);
+  },
+
+  changeDirection : function() {
+    $(document).keydown(function(event){
+      window.game.snake.changeDirection(event.keyCode);
+      event.preventDefault();
+    });
   }
 }
 
@@ -52,6 +59,23 @@ Snake.prototype = {
     cell.removeClass('snake');
     this.head = this.newHead();
     this.render();
+  },
+
+  changeDirection : function(key) {
+    switch (key) {
+      case 39:
+        this.direction = 'r'
+        break;
+      case 37:
+        this.direction = 'l';
+        break;
+      case 38:
+        this.direction = 'u';
+        break;
+      case 40:
+        this.direction = 'd';
+        break;
+    };
   }
 }
 
