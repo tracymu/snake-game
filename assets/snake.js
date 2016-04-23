@@ -79,14 +79,14 @@ Snake.prototype = {
 
 
 function Food() {
-  this.row = Math.floor((Math.random() * 40) + 1);
-  this.column = Math.floor((Math.random() * 40) + 1);
+  this.random = Math.floor((Math.random() * 40) + 1);
+  this.position = [this.random, this.random]
   this.render();
 }
 
 Food.prototype = {
   render : function() {
-    var cell =  $('#' + this.row + '-' + this.column);
+    var cell =  $('#' + this.position[0] + '-' + this.position[1]);
     cell.addClass('food');
   }
 }
