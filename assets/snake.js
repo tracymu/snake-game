@@ -54,6 +54,14 @@ Snake.prototype = {
     }
   },
 
+  move : function() {
+    var cell =  $('#' + this.head[0] + '-' + this.head[1]);
+    cell.removeClass('snake');
+    this.head = this.newHead();
+    this.render();
+  },
+
+
   changeDirection : function() {
     var keys = {
       37 : 'l',
@@ -67,13 +75,6 @@ Snake.prototype = {
       event.preventDefault();
     });
   },
-
-  move : function() {
-    var cell =  $('#' + this.head[0] + '-' + this.head[1]);
-    cell.removeClass('snake');
-    this.head = this.newHead();
-    this.render();
-  }
 }
 
 
