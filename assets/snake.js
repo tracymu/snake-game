@@ -18,8 +18,15 @@ Game.prototype = {
   },
 
   changeDirection : function() {
+    var keys = {
+      37 : 'l',
+      38 : 'u',
+      39 : 'r',
+      40 : 'd'
+    }
+
     $(document).keydown(function(event){
-      window.game.snake.changeDirection(event.keyCode);
+      window.game.snake.direction = keys[event.keyCode];
       event.preventDefault();
     });
   }
@@ -59,23 +66,6 @@ Snake.prototype = {
     cell.removeClass('snake');
     this.head = this.newHead();
     this.render();
-  },
-
-  changeDirection : function(key) {
-    switch (key) {
-      case 39:
-        this.direction = 'r'
-        break;
-      case 37:
-        this.direction = 'l';
-        break;
-      case 38:
-        this.direction = 'u';
-        break;
-      case 40:
-        this.direction = 'd';
-        break;
-    };
   }
 }
 
