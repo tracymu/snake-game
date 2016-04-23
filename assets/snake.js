@@ -13,7 +13,8 @@ function Game() {
     timer = setInterval(function() {
       this.game.checkIfEnd();
       this.game.snake.move();
-    }, 1000);
+      this.game.eatFood();
+    }, 250);
   }
 
   this.checkIfEnd = function() {
@@ -22,10 +23,17 @@ function Game() {
       $('.grid').replaceWith('<h1>Game Over</h1>');
     };
   }
+
+  this.eatFood = function() {
+    if (this.snake.head[0] == this.food.position[0] && this.snake.head[1] == this.food.position[1]) {
+      this.snake.increaseSize();
+    }
+  }
 }
 
 function Snake() {
-  this.head = [20,20]
+  this.head = [20,20];
+  this.bodyCells = [this.head];
   this.direction = 'r';
   this.render();
   this.changeDirection();
@@ -75,12 +83,32 @@ Snake.prototype = {
       event.preventDefault();
     });
   },
+
+  newCell : function() {
+    switch (this.direction) {
+      case 'r':
+        return [this.head[0], this.head[1] - 1] ;
+        break;
+      case 'l':
+        return [this.head[0], this.head[1] + 1];
+        break;
+      case 'u':
+        return [this.head[0] + 1, this.head[1]];
+        break;
+      case 'd':
+        return [this.head[0] - 1, this.head[1]];
+        break;
+    }
+  },
+
+  increaseSize : function() {
+    this.bodyCells.push(this.newCell());
+  }
 }
 
 
 function Food() {
-  this.random = Math.floor((Math.random() * 40) + 1);
-  this.position = [this.random, this.random]
+  this.position = [Math.floor((Math.random() * 40) + 1), Math.floor((Math.random() * 40) + 1)]
   this.render();
 }
 
