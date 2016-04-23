@@ -1,23 +1,23 @@
 function Game() {
-  this.grid = new Grid();
-  this.grid.render();
-  this.snake = new Snake();
-  this.food = new Food();
-  this.start();
-  this.changeDirection();
-};
+  var timer;
 
+  this.init = function() {
+    this.grid = new Grid();
+    this.grid.render();
+    this.snake = new Snake();
+    this.food = new Food();
+    this.start();
+    this.changeDirection();
+  }
 
-Game.prototype = {
-  start : function() {
-    var timer;
-    clearInterval(timer);
+  this.start = function() {
     timer = setInterval(function() {
+      this.game.checkIfEnd();
       this.game.snake.move();
     }, 1000);
-  },
+  }, 
 
-  changeDirection : function() {
+  this.changeDirection = function() {
     var keys = {
       37 : 'l',
       38 : 'u',
@@ -29,6 +29,12 @@ Game.prototype = {
       window.game.snake.direction = keys[event.keyCode];
       event.preventDefault();
     });
+  },
+  this.checkIfEnd = function() {
+    if (this.snake.head[0] < 0 || this.snake.head[0] > 39 || this.snake.head[1] < 0 || this.snake.head[1] > 39  ) {
+      $('.grid').replaceWith('<h1>Game Over</h1>');
+      clearInterval(timer);
+    };
   }
 }
 
@@ -61,7 +67,7 @@ Snake.prototype = {
     }
   },
 
-  move : function() {    
+  move : function() {
     var cell =  $('#' + this.head[0] + '-' + this.head[1]);
     cell.removeClass('snake');
     this.head = this.newHead();
@@ -107,5 +113,6 @@ Grid.prototype = {
 
 $(document).ready(function(){
   game = new Game();
+  game.init();
 });
 
