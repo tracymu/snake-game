@@ -32,8 +32,8 @@ function Game() {
   },
   this.checkIfEnd = function() {
     if (this.snake.head[0] < 0 || this.snake.head[0] > 39 || this.snake.head[1] < 0 || this.snake.head[1] > 39  ) {
-      $('.grid').replaceWith('<h1>Game Over</h1>');
       clearInterval(timer);
+      $('.grid').replaceWith('<h1>Game Over</h1>');
     };
   }
 }
