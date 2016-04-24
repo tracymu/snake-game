@@ -18,54 +18,61 @@ function Game() {
   }
 
   this.checkIfEnd = function() {
-    if (this.snake.head[0] < 0 || this.snake.head[0] > 39 || this.snake.head[1] < 0 || this.snake.head[1] > 39  ) {
+    if (this.snake.bodyCells[0][0] < 0 || this.snake.bodyCells[0][0] > 39 || this.snake.bodyCells[0][1] < 0 || this.snake.bodyCells[0][1] > 39  ) {
       clearInterval(timer);
       $('.grid').replaceWith('<h1>Game Over</h1>');
     };
   }
 
   this.eatFood = function() {
-    if (this.snake.head[0] == this.food.position[0] && this.snake.head[1] == this.food.position[1]) {
-      this.snake.increaseSize();
-    }
+    // if (this.snake.head[0] == this.food.position[0] && this.snake.head[1] == this.food.position[1]) {
+    //   this.snake.increaseSize();
+    // }
   }
 }
 
 function Snake() {
-  this.head = [20,20];
-  this.bodyCells = [this.head];
+  this.bodyCells = [[20,20]];
   this.direction = 'r';
-  this.render();
   this.changeDirection();
 }
 
 Snake.prototype = {
   render : function() {
-    var cell =  $('#' + this.head[0] + '-' + this.head[1]);
+    var cell =  $('#' + this.bodyCells[0][0] + '-' + this.bodyCells[0][1]);
     cell.addClass('snake');
   },
 
   newHead : function() {
     switch (this.direction) {
       case 'r':
-        return [this.head[0], this.head[1] + 1] ;
+        return [this.bodyCells[0][0], this.bodyCells[0][1] + 1] ;
         break;
       case 'l':
-        return [this.head[0], this.head[1] - 1];
+        return [this.bodyCells[0][0], this.bodyCells[0][1] - 1];
         break;
       case 'u':
-        return [this.head[0] - 1, this.head[1]];
+        return [this.bodyCells[0][0] - 1, this.bodyCells[0][1]];
         break;
       case 'd':
-        return [this.head[0] + 1, this.head[1]];
+        return [this.bodyCells[0][0] + 1, this.bodyCells[0][1]];
         break;
     }
   },
 
   move : function() {
-    var cell =  $('#' + this.head[0] + '-' + this.head[1]);
-    cell.removeClass('snake');
-    this.head = this.newHead();
+    var newHead = this.newHead();
+    //  add new head to the beginning (one cell forward)
+    this.bodyCells.unshift(newHead);
+    
+    var newCell = $('#' + newHead[0] + '-' + newHead[1]);
+    newCell.addClass('snake');
+
+    // remove the last cell
+    var oldTail = this.bodyCells.pop();
+    var deadCell = $('#' + oldTail[0] + '-' + oldTail[1]);
+    deadCell.removeClass('snake');
+
     this.render();
   },
 
