@@ -13,8 +13,8 @@ function Game() {
     timer = setInterval(function() {
       this.game.checkIfEnd();
       this.game.snake.move();
-      this.game.eatFood();
-    }, 250);
+      this.game.checkIfEatFood();
+    }, 500);
   }
 
   this.checkIfEnd = function() {
@@ -24,10 +24,11 @@ function Game() {
     };
   }
 
-  this.eatFood = function() {
-    // if (this.snake.head[0] == this.food.position[0] && this.snake.head[1] == this.food.position[1]) {
-    //   this.snake.increaseSize();
-    // }
+  this.checkIfEatFood = function() {
+    if (this.snake.bodyCells[0][0] == this.food.position[0] && this.snake.bodyCells[0][1] == this.food.position[1]) {
+      this.snake.grow = true;
+      this.food.newFood();
+    }
   }
 }
 
@@ -35,6 +36,7 @@ function Snake() {
   this.bodyCells = [[20,20]];
   this.direction = 'r';
   this.changeDirection();
+  this.grow = false;
 }
 
 Snake.prototype = {
@@ -69,9 +71,15 @@ Snake.prototype = {
     newCell.addClass('snake');
 
     // remove the last cell
-    var oldTail = this.bodyCells.pop();
-    var deadCell = $('#' + oldTail[0] + '-' + oldTail[1]);
-    deadCell.removeClass('snake');
+    
+    if (this.grow == true) {
+      this.grow = false;
+    } else {
+      var oldTail = this.bodyCells.pop();
+      var deadCell = $('#' + oldTail[0] + '-' + oldTail[1]);
+      deadCell.removeClass('snake');
+    };
+
 
     this.render();
   },
@@ -90,27 +98,6 @@ Snake.prototype = {
       event.preventDefault();
     });
   },
-
-  newCell : function() {
-    switch (this.direction) {
-      case 'r':
-        return [this.head[0], this.head[1] - 1] ;
-        break;
-      case 'l':
-        return [this.head[0], this.head[1] + 1];
-        break;
-      case 'u':
-        return [this.head[0] + 1, this.head[1]];
-        break;
-      case 'd':
-        return [this.head[0] - 1, this.head[1]];
-        break;
-    }
-  },
-
-  increaseSize : function() {
-    this.bodyCells.push(this.newCell());
-  }
 }
 
 
@@ -123,6 +110,14 @@ Food.prototype = {
   render : function() {
     var cell =  $('#' + this.position[0] + '-' + this.position[1]);
     cell.addClass('food');
+  },
+
+  newFood : function() {
+    var cell = $('#' + this.position[0] + '-' + this.position[1]);
+    cell.removeClass('food');
+
+    this.position = [Math.floor((Math.random() * 40) + 1), Math.floor((Math.random() * 40) + 1)];
+    this.render();
   }
 }
 
