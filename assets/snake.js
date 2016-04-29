@@ -33,7 +33,7 @@ function Game() {
 }
 
 function Snake() {
-  this.bodyCells = [[20,20]];
+  this.bodyCells = [[10,10]];
   this.direction = 'r';
   this.changeDirection();
   this.grow = false;
@@ -102,7 +102,7 @@ Snake.prototype = {
 
 
 function Food() {
-  this.position = [Math.floor((Math.random() * 40) + 1), Math.floor((Math.random() * 40) + 1)]
+  this.position = [Math.floor((Math.random() * 20) + 1), Math.floor((Math.random() * 20) + 1)]
   this.render();
 }
 
@@ -116,7 +116,7 @@ Food.prototype = {
     var cell = $('#' + this.position[0] + '-' + this.position[1]);
     cell.removeClass('food');
 
-    this.position = [Math.floor((Math.random() * 40) + 1), Math.floor((Math.random() * 40) + 1)];
+    this.position = [Math.floor((Math.random() * 20) + 1), Math.floor((Math.random() * 20) + 1)];
     this.render();
   }
 }
@@ -130,9 +130,9 @@ Grid.prototype = {
   render : function() {
     var table = $('<table></table>');
 
-    for(i=0; i<40; i++){
+    for(i=0; i<20; i++){
       var row = $('<tr></tr>');
-      for(j=0; j< 40; j++){
+      for(j=0; j< 20; j++){
         var col = $('<td class="cell" id ="' + i + '-' + j + '"></td>');
         row.append(col);
       };
