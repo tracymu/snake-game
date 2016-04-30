@@ -101,11 +101,13 @@ Snake.prototype = {
 
   changeDirection : function() {
     $(document).keydown(function(event){
-      if (window.game.snake.direction%2 == event.keyCode%2) {
-        return;
-      } else {
-        window.game.snake.direction = event.keyCode;
-      }
+      if ([37,38,39,40].indexOf(event.keyCode) > -1) {
+        if (window.game.snake.direction%2 == event.keyCode%2) {
+          return;
+        } else {
+          window.game.snake.direction = event.keyCode;
+        };
+      };
       event.preventDefault();
     });
   },
