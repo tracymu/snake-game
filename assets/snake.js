@@ -25,7 +25,7 @@ function Game() {
   }
 
   var ateItself = function() {
-    for (var i = 0; i < this.game.snake.bodyCells.length; i++) {
+    for (var i = 2; i < this.game.snake.bodyCells.length; i++) {
       if (this.game.snake.bodyCells[i][0] == this.game.snake.newHead()[0] && this.game.snake.bodyCells[i][1] == this.game.snake.newHead()[1]) {
         return true;
       }
@@ -100,15 +100,12 @@ Snake.prototype = {
 
 
   changeDirection : function() {
-    // var keys = {
-    //   37 : 'l',
-    //   38 : 'u',
-    //   39 : 'r',
-    //   40 : 'd'
-    // }
-
     $(document).keydown(function(event){
-      window.game.snake.direction = event.keyCode;
+      if (window.game.snake.direction%2 == event.keyCode%2) {
+        return;
+      } else {
+        window.game.snake.direction = event.keyCode;
+      }
       event.preventDefault();
     });
   },
