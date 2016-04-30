@@ -14,13 +14,27 @@ function Game() {
       this.game.checkIfEnd();
       this.game.snake.move();
       this.game.checkIfEatFood();
-    }, 500);
+    }, 250);
   }
 
   this.checkIfEnd = function() {
-    if (this.snake.bodyCells[0][0] < 0 || this.snake.bodyCells[0][0] > 39 || this.snake.bodyCells[0][1] < 0 || this.snake.bodyCells[0][1] > 39  ) {
+    if (leftGrid() || ateItself()) {
       clearInterval(timer);
       $('.grid').replaceWith('<h1>Game Over</h1>');
+    };
+  }
+
+  var ateItself = function() {
+    for (var i = 0; i < this.game.snake.bodyCells.length; i++) {
+      if (this.game.snake.bodyCells[i][0] == this.game.snake.newHead()[0] && this.game.snake.bodyCells[i][1] == this.game.snake.newHead()[1]) {
+        return true;
+      }
+    }
+  }
+
+  var leftGrid = function() {
+    if (this.game.snake.bodyCells[0][0] < 0 || this.game.snake.bodyCells[0][0] > 19 || this.game.snake.bodyCells[0][1] < 0 || this.game.snake.bodyCells[0][1] > 19  ) {
+      return true;
     };
   }
 
@@ -116,7 +130,7 @@ Food.prototype = {
     var cell = $('#' + this.position[0] + '-' + this.position[1]);
     cell.removeClass('food');
 
-    this.position = [Math.floor((Math.random() * 20) + 1), Math.floor((Math.random() * 20) + 1)];
+    this.position = [Math.floor((Math.random() * 19) + 1), Math.floor((Math.random() * 19) + 1)];
     this.render();
   }
 }
