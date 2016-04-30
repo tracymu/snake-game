@@ -14,7 +14,7 @@ function Game() {
       this.game.checkIfEnd();
       this.game.snake.move();
       this.game.checkIfEatFood();
-    }, 250);
+    }, 500);
   }
 
   this.checkIfEnd = function() {
@@ -48,7 +48,7 @@ function Game() {
 
 function Snake() {
   this.bodyCells = [[10,10]];
-  this.direction = 'r';
+  this.direction = 39;
   this.changeDirection();
   this.grow = false;
 }
@@ -61,16 +61,16 @@ Snake.prototype = {
 
   newHead : function() {
     switch (this.direction) {
-      case 'r':
+      case 39:
         return [this.bodyCells[0][0], this.bodyCells[0][1] + 1] ;
         break;
-      case 'l':
+      case 37:
         return [this.bodyCells[0][0], this.bodyCells[0][1] - 1];
         break;
-      case 'u':
+      case 38:
         return [this.bodyCells[0][0] - 1, this.bodyCells[0][1]];
         break;
-      case 'd':
+      case 40:
         return [this.bodyCells[0][0] + 1, this.bodyCells[0][1]];
         break;
     }
@@ -100,15 +100,15 @@ Snake.prototype = {
 
 
   changeDirection : function() {
-    var keys = {
-      37 : 'l',
-      38 : 'u',
-      39 : 'r',
-      40 : 'd'
-    }
+    // var keys = {
+    //   37 : 'l',
+    //   38 : 'u',
+    //   39 : 'r',
+    //   40 : 'd'
+    // }
 
     $(document).keydown(function(event){
-      window.game.snake.direction = keys[event.keyCode];
+      window.game.snake.direction = event.keyCode;
       event.preventDefault();
     });
   },
@@ -161,4 +161,17 @@ $(document).ready(function(){
   game = new Game();
   game.init();
 });
+
+
+
+ // To do
+ // what happens when you hit other buttons  jjust return - it's making errors and breaking things
+ //  refactor to the maxtreme
+ //  increase pointes
+ // increase speed with increased pointe
+ // the food cannot appear in a spot that has a snake cell in it
+
+//  sometimes the food still not there!!!
+//  on open the page, it must have a play game.
+//  put up on my blog somehow
 
